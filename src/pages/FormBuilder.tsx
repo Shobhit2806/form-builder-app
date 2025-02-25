@@ -1,5 +1,5 @@
 import React from "react";
-import ChooseFieldForm from "../components/ChooseFieldForm";
+import CreateFormField from "../components/CreateFormField";
 
 const FormBuilder = () => {
   const [formSchema, setFormSchema] = React.useState<
@@ -12,6 +12,7 @@ const FormBuilder = () => {
       { id: Date.now(), type: "textType" },
     ]);
   };
+
   const handleDeleteContent = (contentId: number) => {
     setFormSchema((formSchema) =>
       formSchema.filter((item) => item.id !== contentId)
@@ -28,7 +29,7 @@ const FormBuilder = () => {
         </button>
       </div>
       {formSchema.map((content) => (
-        <ChooseFieldForm
+        <CreateFormField
           key={content.id}
           handleDeleteContent={handleDeleteContent}
           id={content.id}

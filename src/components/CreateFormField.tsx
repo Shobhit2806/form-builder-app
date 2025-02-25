@@ -7,9 +7,9 @@ type Props = {
   handleDeleteContent: (id: number) => void;
   id: number;
 };
-const ChooseFieldForm: React.FC<Props> = ({ handleDeleteContent, id }) => {
+const CreateFormField: React.FC<Props> = ({ handleDeleteContent, id }) => {
   const [selectedFieldType, setSelectedFieldType] = React.useState<string>(
-    OPTIONS[0]
+    OPTIONS[1]
   );
 
   const fieldComponentMapping = {
@@ -63,4 +63,4 @@ const ChooseFieldForm: React.FC<Props> = ({ handleDeleteContent, id }) => {
   );
 };
 
-export default ChooseFieldForm;
+export default CreateFormField;
