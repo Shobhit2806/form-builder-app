@@ -3,7 +3,7 @@ import CreateFormField from "../components/CreateFormField";
 import { useNavigate, useParams } from "react-router";
 import { FormField, FormSchema } from "../utils/types";
 // import useValidateForm from "../hooks/useValidateForm";
-// import { useAutoSave } from "../hooks/useAutoSave";
+import { useAutoSave } from "../hooks/useAutoSave";
 
 const FormBuilder = () => {
   const [formSchema, setFormSchema] = useState<FormSchema | null>(null);
@@ -11,7 +11,7 @@ const FormBuilder = () => {
 
   const navigate = useNavigate();
   // const isFormValid = true;
-  // useAutoSave(formSchema, 1000);
+  useAutoSave(formSchema, 1000);
 
   const handleAddField = () => {
     setFormSchema((prev) =>
