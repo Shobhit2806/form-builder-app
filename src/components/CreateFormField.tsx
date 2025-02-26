@@ -4,18 +4,27 @@ import DynamicOptionField from "./DynamicOptionField";
 import DynamicNumberField from "./DynamicNumberField";
 
 type Props = {
-  handleDeleteContent: (id: number) => void;
-  id: number;
+  handleDeleteField: (id: string) => void;
+  id: string;
+  handleUpdateField: (id: string, key: string, value: any) => void;
 };
-const CreateFormField: React.FC<Props> = ({ handleDeleteContent, id }) => {
+const CreateFormField: React.FC<Props> = ({
+  handleDeleteField,
+  id,
+  handleUpdateField,
+}) => {
   const [selectedFieldType, setSelectedFieldType] = React.useState<string>(
     OPTIONS[1]
   );
 
   const fieldComponentMapping = {
     Text: null,
-    Number: <DynamicNumberField />,
-    Options: <DynamicOptionField />,
+    Number: (
+      <DynamicNumberField handleUpdateField={handleUpdateField} id={id} />
+    ),
+    Options: (
+      <DynamicOptionField handleUpdateField={handleUpdateField} id={id} />
+    ),
   };
 
   const activeComponent = fieldComponentMapping[selectedFieldType];
@@ -25,6 +34,9 @@ const CreateFormField: React.FC<Props> = ({ handleDeleteContent, id }) => {
       <div className="flex justify-between">
         <input
           type="text"
+          onChange={(e) => {
+            handleUpdateField(id, "question", e.target.value);
+          }}
           placeholder="Question Title"
           className="border border-gray-400 rounded-md px-4 py-2 w-full max-w-md 
                  focus:outline-none focus:ring-2 focus:ring-blue-500 
@@ -33,7 +45,10 @@ const CreateFormField: React.FC<Props> = ({ handleDeleteContent, id }) => {
 
         <select
           value={selectedFieldType}
-          onChange={(e) => setSelectedFieldType(e.target.value)}
+          onChange={(e) => {
+            setSelectedFieldType(e.target.value);
+            handleUpdateField(id, "type", e.target.value);
+          }}
           className="border border-gray-400 rounded-md px-4 py-2 w-[30%] max-w-md 
                    focus:outline-none focus:ring-2 focus:ring-blue-500 
                    hover:border-blue-500 transition duration-300 bg-white"
@@ -52,7 +67,7 @@ const CreateFormField: React.FC<Props> = ({ handleDeleteContent, id }) => {
         <div className="flex gap-8 justify-end p-2">
           <button
             onClick={() => {
-              handleDeleteContent(id);
+              handleDeleteField(id);
             }}
           >
             <img src="/images/delete.svg" alt="delete" width="20px" />{" "}

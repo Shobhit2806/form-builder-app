@@ -1,16 +1,21 @@
 import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-// import FormBuilder from "./pages/FormBuilder";
+import FormBuilder from "./pages/Formbuilder";
 import FormRender from "./pages/FormRender";
-// import LandingPage from "./pages/LandingPage";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
     <>
       <Header />
-      {/* <LandingPage /> */}
-      {/* <FormBuilder /> */}
-      <FormRender />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/form-builder/:formId" element={<FormBuilder />} />
+          <Route path="/form-render/:formId" element={<FormRender />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

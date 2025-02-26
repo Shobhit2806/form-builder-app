@@ -1,5 +1,13 @@
 import React from "react";
-const DynamicOptionField: React.FC = () => {
+type Props = {
+  id: string;
+  handleUpdateField: (
+    id: string,
+    key: string,
+    value: string | number | string[]
+  ) => void;
+};
+const DynamicOptionField: React.FC<Props> = ({ id, handleUpdateField }) => {
   const [options, setOptions] = React.useState<string[]>([""]);
 
   const addOption = () => {
@@ -10,6 +18,7 @@ const DynamicOptionField: React.FC = () => {
     const updatedOptions = [...options];
     updatedOptions[index] = value;
     setOptions(updatedOptions);
+    handleUpdateField(id, "options", updatedOptions);
   };
 
   const removeOption = (index: number) => {
