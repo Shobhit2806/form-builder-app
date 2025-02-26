@@ -1,3 +1,5 @@
+import { FormField } from "../utils/types";
+
 type Props = {
   id: string;
   handleUpdateField: (
@@ -5,9 +7,15 @@ type Props = {
     key: string,
     value: string | number | string[]
   ) => void;
+  fieldData: FormField;
 };
 
-const DynamicNumberField: React.FC<Props> = ({ id, handleUpdateField }) => {
+const DynamicNumberField: React.FC<Props> = ({
+  id,
+  handleUpdateField,
+  fieldData,
+}) => {
+  const { minLimit, maxLimit } = fieldData;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     handleUpdateField(id, name, value);
@@ -17,6 +25,7 @@ const DynamicNumberField: React.FC<Props> = ({ id, handleUpdateField }) => {
       <div className="flex gap-6 items-center">
         <label>Number should be between</label>
         <input
+          value={minLimit ?? ""}
           type="number"
           name="minLimit"
           className="border px-2 w-[100px]"
@@ -24,6 +33,7 @@ const DynamicNumberField: React.FC<Props> = ({ id, handleUpdateField }) => {
         />
         {"and"}
         <input
+          value={maxLimit ?? ""}
           type="number"
           name="maxLimit"
           className="border px-2 w-[100px]"

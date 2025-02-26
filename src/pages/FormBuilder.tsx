@@ -108,6 +108,7 @@ const FormBuilder = () => {
       <div className="bg-gray-100 py-2 px-4 w-[90%] m-auto mt-4 border-1 border-gray-400 rounded-2xl flex justify-between items-center gap-4">
         <input
           type="text"
+          value={formSchema.title}
           onChange={(e) => {
             handleUpdateTtile(e.target.value);
           }}
@@ -136,6 +137,7 @@ const FormBuilder = () => {
           handleDeleteField={handleDeleteField}
           id={content.id}
           handleUpdateField={handleUpdateField}
+          fieldData={content}
         />
       ))}
     </div>

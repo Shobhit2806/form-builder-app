@@ -2,31 +2,41 @@ import React from "react";
 import { OPTIONS } from "../utils/constants";
 import DynamicOptionField from "./DynamicOptionField";
 import DynamicNumberField from "./DynamicNumberField";
+import { FormField } from "../utils/types";
 
 type Props = {
   handleDeleteField: (id: string) => void;
   id: string;
   handleUpdateField: (id: string, key: string, value: any) => void;
+  fieldData: FormField;
 };
 const CreateFormField: React.FC<Props> = ({
   handleDeleteField,
   id,
   handleUpdateField,
+  fieldData,
 }) => {
   const [selectedFieldType, setSelectedFieldType] = React.useState<string>(
-    OPTIONS[1]
+    fieldData ? fieldData.type : OPTIONS[1]
   );
-
+  const { question } = fieldData;
   const fieldComponentMapping = {
     Text: null,
     Number: (
-      <DynamicNumberField handleUpdateField={handleUpdateField} id={id} />
+      <DynamicNumberField
+        handleUpdateField={handleUpdateField}
+        id={id}
+        fieldData={fieldData}
+      />
     ),
     Options: (
-      <DynamicOptionField handleUpdateField={handleUpdateField} id={id} />
+      <DynamicOptionField
+        handleUpdateField={handleUpdateField}
+        id={id}
+        fieldData={fieldData}
+      />
     ),
   };
-
   const activeComponent = fieldComponentMapping[selectedFieldType];
 
   return (
@@ -34,6 +44,7 @@ const CreateFormField: React.FC<Props> = ({
       <div className="flex justify-between">
         <input
           type="text"
+          value={question ?? ""}
           onChange={(e) => {
             handleUpdateField(id, "question", e.target.value);
           }}

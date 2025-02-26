@@ -1,4 +1,5 @@
 import React from "react";
+import { FormField } from "../utils/types";
 type Props = {
   id: string;
   handleUpdateField: (
@@ -6,10 +7,16 @@ type Props = {
     key: string,
     value: string | number | string[]
   ) => void;
+  fieldData?: FormField;
 };
-const DynamicOptionField: React.FC<Props> = ({ id, handleUpdateField }) => {
-  const [options, setOptions] = React.useState<string[]>([""]);
-
+const DynamicOptionField: React.FC<Props> = ({
+  id,
+  handleUpdateField,
+  fieldData,
+}) => {
+  const [options, setOptions] = React.useState<string[]>(
+    fieldData?.options || [""]
+  );
   const addOption = () => {
     setOptions([...options, ""]);
   };
@@ -28,7 +35,7 @@ const DynamicOptionField: React.FC<Props> = ({ id, handleUpdateField }) => {
 
   return (
     <div className="w-[90%] flex flex-col gap-4 bg-gray-100">
-      {options.map((option, index) => (
+      {options?.map((option, index) => (
         <div key={index} className="flex items-center gap-4">
           <input
             type="text"
