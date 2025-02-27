@@ -6,7 +6,6 @@ type QuestionFieldProps = {
   options?: string[];
   minLimit?: number;
   maxLimit?: number;
-  customError?: string;
 };
 
 const ResponderQuestionField: React.FC<QuestionFieldProps> = ({
@@ -15,7 +14,6 @@ const ResponderQuestionField: React.FC<QuestionFieldProps> = ({
   options,
   minLimit,
   maxLimit,
-  customError,
 }) => {
   return (
     <div className="w-[50%] p-4 flex flex-col  gap-2 bg-gray-100 border border-gray-400 rounded-lg mt-4 shadow-lg border-l-4 border-l-blue-900 ">

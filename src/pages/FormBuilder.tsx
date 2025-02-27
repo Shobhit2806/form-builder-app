@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CreateFormField from "../components/CreateFormField";
 import { useNavigate, useParams } from "react-router";
 import { FormField, FormSchema } from "../utils/types";
-// import useValidateForm from "../hooks/useValidateForm";
+import useValidateForm from "../hooks/useValidateForm";
 import { useAutoSave } from "../hooks/useAutoSave";
 
 const FormBuilder = () => {
@@ -10,9 +10,8 @@ const FormBuilder = () => {
   const { formId } = useParams();
 
   const navigate = useNavigate();
-  // const isFormValid = true;
+  const { isValid, errors } = useValidateForm(formSchema);
   useAutoSave(formSchema, 1000);
-
   const handleAddField = () => {
     setFormSchema((prev) =>
       prev
@@ -67,6 +66,7 @@ const FormBuilder = () => {
   };
 
   const handlePublish = () => {
+    if (!isValid) return;
     const existingForms = localStorage.getItem("formSchema");
 
     if (existingForms) {
@@ -119,13 +119,17 @@ const FormBuilder = () => {
         <div className="flex gap-4">
           <button
             onClick={handleAddField}
-            className="bg-white border rounded-xl px-4 py-1 cursor-pointer"
+            className="bg-white border rounded-xl px-4 py-1 cursor-pointer 
+             disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-200"
+            disabled={!isValid}
           >
             ＋ Add Field
           </button>
           <button
             onClick={handlePublish}
-            className="bg-white border rounded-xl px-4 py-1 cursor-pointer"
+            className="bg-white border rounded-xl px-4 py-1 cursor-pointer 
+             disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-200"
+            disabled={!isValid}
           >
             Publish✨
           </button>

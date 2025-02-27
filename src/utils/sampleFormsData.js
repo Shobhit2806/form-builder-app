@@ -1,21 +1,3 @@
-// export type FieldType = "Text" | "Number" | "Options";
-
-// export interface FormField {
-//   id: string;
-//   type: FieldType;
-//   question: string;
-//   minLimit?: number;
-//   maxLimit?: number;
-//   customError?: string;
-//   options?: string[];
-// }
-
-// export interface FormData {
-//   id: string;
-//   title: string;
-//   fields: FormField[];
-//}
-
 export const sampleFormsData = [
   {
     id: "form-1",

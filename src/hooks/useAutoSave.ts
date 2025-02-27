@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { FormSchema } from "../utils/types";
+import useValidateForm from "./useValidateForm";
 
 export const useAutoSave = (data: FormSchema | null, delay: number): void => {
+  const { isValid } = useValidateForm(data);
+
   const prevData = useRef(data);
   const [hasDataChanged, setHasDataChanged] = useState(false);
   useEffect(() => {
-    if (JSON.stringify(prevData.current) === JSON.stringify(data)) {
+    if (JSON.stringify(prevData.current) === JSON.stringify(data) || !isValid) {
       return;
     }
     prevData.current = data;
@@ -13,7 +16,7 @@ export const useAutoSave = (data: FormSchema | null, delay: number): void => {
   }, [data]);
 
   useEffect(() => {
-    if (hasDataChanged) {
+    if (hasDataChanged && isValid) {
       const timeoutId = setTimeout(() => {
         const existingForms = localStorage.getItem("formSchema");
         const formId = data?.id;
@@ -41,5 +44,5 @@ export const useAutoSave = (data: FormSchema | null, delay: number): void => {
         clearTimeout(timeoutId);
       };
     }
-  }, [data, delay, hasDataChanged]);
+  }, [data, delay, hasDataChanged, isValid]);
 };

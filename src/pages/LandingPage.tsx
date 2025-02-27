@@ -20,6 +20,7 @@ const LandingPage = () => {
     localStorage.setItem("formSchema", JSON.stringify(updatedForms));
     navigate("/form-builder/" + newForm.id);
   };
+
   return (
     <>
       <div className="flex flex-col items-center justify-center h-[92vh]">

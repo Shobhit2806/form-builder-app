@@ -40,7 +40,7 @@ const DynamicNumberField: React.FC<Props> = ({
           onChange={handleChange}
         />
       </div>
-      <div>
+      {/* <div>
         <input
           type="text"
           name="customError"
@@ -50,7 +50,7 @@ const DynamicNumberField: React.FC<Props> = ({
                    focus:outline-none focus:ring-2 focus:ring-blue-500 
                    hover:border-blue-500 transition duration-300"
         />
-      </div>
+      </div> */}
     </div>
   );
 };
