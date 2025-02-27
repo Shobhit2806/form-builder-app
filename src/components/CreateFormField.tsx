@@ -9,14 +9,14 @@ type Props = {
   id: string;
   handleUpdateField: (id: string, key: string, value: any) => void;
   fieldData: FormField;
-  errors?: Record<string, string>
+  errors?: Record<string, string>;
 };
 const CreateFormField: React.FC<Props> = ({
   handleDeleteField,
   id,
   handleUpdateField,
   fieldData,
-  errors
+  errors,
 }) => {
   const [selectedFieldType, setSelectedFieldType] = React.useState<string>(
     fieldData ? fieldData.type : OPTIONS[1]
@@ -38,11 +38,13 @@ const CreateFormField: React.FC<Props> = ({
         id={id}
         fieldData={fieldData}
         errors={errors}
-
       />
     ),
   };
-  const activeComponent = fieldComponentMapping[selectedFieldType];
+  const activeComponent =
+    fieldComponentMapping[
+      selectedFieldType as keyof typeof fieldComponentMapping
+    ] ?? null;
 
   return (
     <div className="w-[50%] p-4 flex flex-col  gap-2 bg-gray-100 border border-gray-400 rounded-lg mt-4 shadow-lg border-l-4 border-l-blue-900 ">

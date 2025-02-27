@@ -1,14 +1,7 @@
 import React from "react";
+import { FormField } from "../utils/types";
 
-type QuestionFieldProps = {
-  type: string;
-  question: string;
-  options?: string[];
-  minLimit?: number;
-  maxLimit?: number;
-};
-
-const ResponderQuestionField: React.FC<QuestionFieldProps> = ({
+const ResponderQuestionField: React.FC<FormField> = ({
   type,
   question,
   options,
