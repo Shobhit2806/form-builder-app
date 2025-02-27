@@ -9,12 +9,14 @@ type Props = {
   id: string;
   handleUpdateField: (id: string, key: string, value: any) => void;
   fieldData: FormField;
+  errors?: Record<string, string>
 };
 const CreateFormField: React.FC<Props> = ({
   handleDeleteField,
   id,
   handleUpdateField,
   fieldData,
+  errors
 }) => {
   const [selectedFieldType, setSelectedFieldType] = React.useState<string>(
     fieldData ? fieldData.type : OPTIONS[1]
@@ -27,6 +29,7 @@ const CreateFormField: React.FC<Props> = ({
         handleUpdateField={handleUpdateField}
         id={id}
         fieldData={fieldData}
+        errors={errors}
       />
     ),
     Options: (
@@ -34,6 +37,8 @@ const CreateFormField: React.FC<Props> = ({
         handleUpdateField={handleUpdateField}
         id={id}
         fieldData={fieldData}
+        errors={errors}
+
       />
     ),
   };

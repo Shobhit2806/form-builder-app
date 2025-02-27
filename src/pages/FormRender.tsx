@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ResponderQuestionField from "../components/ResponderQuestionField";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FormSchema } from "../utils/types";
 import Toast from "../components/Toast";
 const FormRender = () => {
@@ -9,6 +9,7 @@ const FormRender = () => {
     message: string;
     type: "success" | "error" | "info";
   } | null>(null);
+  const navigate = useNavigate();
   const { formId } = useParams();
   useEffect(() => {
     const getFormData = () => {
@@ -32,6 +33,10 @@ const FormRender = () => {
   }, [formId]);
   const handleSubmit = () => {
     setToast({ message: "Form submitted successfully!", type: "success" });
+    setTimeout(() => {
+      setToast(null);
+      navigate("/");
+    }, 2000);
   };
   return (
     <div className="flex flex-col items-center">

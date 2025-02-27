@@ -4,14 +4,20 @@ import { useNavigate, useParams } from "react-router";
 import { FormField, FormSchema } from "../utils/types";
 import useValidateForm from "../hooks/useValidateForm";
 import { useAutoSave } from "../hooks/useAutoSave";
+import Toast from "../components/Toast";
 
 const FormBuilder = () => {
   const [formSchema, setFormSchema] = useState<FormSchema | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error" | "info";
+  } | null>(null);
   const { formId } = useParams();
 
   const navigate = useNavigate();
+
   const { isValid, errors } = useValidateForm(formSchema);
-  useAutoSave(formSchema, 1000);
+  const { autoSaveState } = useAutoSave(formSchema, 2000);
   const handleAddField = () => {
     setFormSchema((prev) =>
       prev
@@ -85,10 +91,13 @@ const FormBuilder = () => {
         parsedForms[selectedFormIndex] = updatedForm;
 
         localStorage.setItem("formSchema", JSON.stringify(parsedForms));
+        setToast({ message: "Form Published successfully! Redirecting", type: "success" });
       }
     }
-
-    navigate("/form-render/" + formId);
+    setTimeout(() => {
+      setToast(null);
+      navigate("/form-render/" + formId);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -115,6 +124,17 @@ const FormBuilder = () => {
           defaultValue={"Untitled form"}
           className="border border-gray-400 w-full max-w-md  rounded-xl px-4 py-2 text-xl"
         />
+        {isValid && (
+          <p
+            className={`
+    text-sm font-medium transition-opacity duration-300 
+    ${autoSaveState === "saving" ? "text-blue-500 animate-pulse" : ""}
+    ${autoSaveState === "saved" ? "text-green-500" : ""}`}
+          >
+            {autoSaveState === "saving" && "Saving..."}
+            {autoSaveState === "saved" && "Saved!"}
+          </p>
+        )}
 
         <div className="flex gap-4">
           <button
@@ -142,8 +162,10 @@ const FormBuilder = () => {
           id={content.id}
           handleUpdateField={handleUpdateField}
           fieldData={content}
+          errors={errors}
         />
       ))}
+      {toast && <Toast message={toast.message} type={toast.type} />}
     </div>
   );
 };

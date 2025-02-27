@@ -23,14 +23,15 @@ const useValidateForm = (form: FormSchema | null) => {
           newErrors[field.id] = "Min limit and max limit are required";
         }
         if (field.minLimit !== undefined && field.maxLimit !== undefined) {
-          if (field.minLimit >= field.maxLimit) {
+          const minLimit = Number(field.minLimit);
+          const maxLimit = Number(field.maxLimit);
+          if (minLimit >= maxLimit) {
             newErrors[
               field.id
             ] = `Min limit (${field.minLimit}) should be less than max limit (${field.maxLimit})`;
           }
         }
       }
-
       if (
         field.type === "Options" &&
         (!field.options || field.options.length === 0)

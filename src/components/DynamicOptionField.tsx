@@ -8,11 +8,13 @@ type Props = {
     value: string | number | string[]
   ) => void;
   fieldData?: FormField;
+  errors?: Record<string, string>;
 };
 const DynamicOptionField: React.FC<Props> = ({
   id,
   handleUpdateField,
   fieldData,
+  errors,
 }) => {
   const [options, setOptions] = React.useState<string[]>(
     fieldData?.options || [""]
@@ -31,6 +33,7 @@ const DynamicOptionField: React.FC<Props> = ({
   const removeOption = (index: number) => {
     const filteredOptions = options.filter((_, i) => i !== index);
     setOptions(filteredOptions);
+    handleUpdateField(id, "options", filteredOptions);
   };
 
   return (
@@ -58,6 +61,12 @@ const DynamicOptionField: React.FC<Props> = ({
       <button onClick={addOption} className="text-left cursor-pointer">
         ➕ Add Option
       </button>
+
+      {errors && errors[id] && (
+        <div className="text-red-600 text-sm mt-2 bg-red-100 border border-red-400 p-2 rounded-md">
+          <p>{errors[id]}</p>
+        </div>
+      )}
     </div>
   );
 };
