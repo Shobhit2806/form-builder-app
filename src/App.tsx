@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import FormBuilder from "./pages/Formbuilder";
+import FormBuilder from "./pages/FormBuilder";
 import FormRender from "./pages/FormRender";
 import LandingPage from "./pages/LandingPage";
 
